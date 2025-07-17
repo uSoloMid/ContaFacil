@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Resultado Carga XML</title>
+    <title>Resultado de la carga XML</title>
 </head>
 <body>
-    <h1 th:text="${message}">Cargando...</h1>
+    <h1 th:text="${message}">Mensaje aquí</h1>
 
-    <p>Emisor: <span th:text="${emisorNombre}">Desconocido</span></p>
-    <p>Receptor: <span th:text="${receptorNombre}">Desconocido</span></p>
-    <p>UUID: <span th:text="${uuid}">Desconocido</span></p>
+    <p><strong>Emisor:</strong> <span th:text="${emisorNombre}">Nombre Emisor</span></p>
+    <p><strong>Receptor:</strong> <span th:text="${receptorNombre}">Nombre Receptor</span></p>
+    <p><strong>UUID:</strong> <span th:text="${uuid}">UUID</span></p>
+
+    <a th:href="@{/}">Subir otro archivo</a>
 </body>
 </html>
