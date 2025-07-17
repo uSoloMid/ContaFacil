@@ -18,7 +18,8 @@ import org.w3c.dom.Element;
 
 import java.io.InputStream;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+import java.util.List; // <-- AÑADIDO para mostrar lista de facturas
 
 @Controller
 public class XmlController {
@@ -59,14 +60,11 @@ public class XmlController {
             String tipoComprobante = comprobante.getAttribute("TipoDeComprobante");
             String metodoPago = comprobante.getAttribute("MetodoPago");
 
-            // Convertir fecha String a LocalDateTime (el formato del XML suele ser ISO 8601)
             LocalDateTime fecha = null;
             if (fechaStr != null && !fechaStr.isEmpty()) {
-                // En el XML la fecha puede venir así: 2024-06-28T10:26:12
                 fecha = LocalDateTime.parse(fechaStr);
             }
 
-            // Convertir subtotal y total a Double
             Double subtotal = subtotalStr.isEmpty() ? 0.0 : Double.parseDouble(subtotalStr);
             Double total = totalStr.isEmpty() ? 0.0 : Double.parseDouble(totalStr);
 
@@ -74,7 +72,6 @@ public class XmlController {
             String receptorNombre = receptor != null ? receptor.getAttribute("Nombre") : "No encontrado";
             String uuid = timbre != null ? timbre.getAttribute("UUID") : "No encontrado";
 
-            // Crear entidad Factura y asignar valores
             Factura factura = new Factura();
             factura.setSerie(serie);
             factura.setFolio(folio);
@@ -89,10 +86,8 @@ public class XmlController {
             factura.setReceptorNombre(receptorNombre);
             factura.setUuid(uuid);
 
-            // Guardar en base de datos
             facturaRepository.save(factura);
 
-            // Enviar datos a la vista
             model.addAttribute("message", "Archivo cargado y guardado exitosamente.");
             model.addAttribute("emisorNombre", emisorNombre);
             model.addAttribute("receptorNombre", receptorNombre);
@@ -106,5 +101,13 @@ public class XmlController {
         }
 
         return "upload-result";
+    }
+
+    // 👉 NUEVO MÉTODO PARA MOSTRAR FACTURAS EN UNA TABLA
+    @GetMapping("/facturas")
+    public String mostrarFacturas(Model model) {
+        List<Factura> listaFacturas = facturaRepository.findAll();
+        model.addAttribute("facturas", listaFacturas);
+        return "facturas";
     }
 }

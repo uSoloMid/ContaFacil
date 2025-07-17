@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Facturas Cargadas</title>
+    <meta charset="UTF-8">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1>Facturas Cargadas</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>UUID</th>
+                <th>RFC Emisor</th>
+                <th>RFC Receptor</th>
+                <th>Total</th>
+                <th>Tipo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="factura : ${facturas}">
+                <td th:text="${factura.fecha}">2024-01-01</td>
+                <td th:text="${factura.uuid}">ABC-123</td>
+                <td th:text="${factura.emisorNombre}">RFC-EMISOR</td>
+                <td th:text="${factura.receptorNombre}">RFC-RECEPTOR</td>
+                <td th:text="${factura.total}">1000.00</td>
+                <td th:text="${factura.tipoComprobante}">I</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
