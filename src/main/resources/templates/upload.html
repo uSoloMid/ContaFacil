@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Subir archivo XML</title>
+</head>
+<body>
+    <h1>Subir archivo XML</h1>
+    <form method="post" enctype="multipart/form-data" th:action="@{/upload}">
+        <input type="file" name="file" accept=".xml" required />
+        <button type="submit">Subir</button>
+    </form>
+</body>
+</html>
